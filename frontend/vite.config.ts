@@ -20,7 +20,9 @@ export default defineConfig({
     open: false,
     strictPort: false,
     proxy: {
-      '/api': {
+      // 用正则而不是字符串 '/api'：字符串键是前缀匹配，会误伤 /apigate、/apigateway
+      // 这类同样以 /api 开头的前端页面路由，把它们错误代理到后端拿到 404。
+      '^/api(?:/|$)': {
         target: proxyTarget,
         changeOrigin: true,
       },

@@ -24,5 +24,6 @@ from app.routers import apigate as router_apigate
 from app.routers import archive as router_archive
 from app.routers import template as router_template
 from app.routers import flowline as router_flowline
+from app.routers import batchscope as router_batchscope
 
-ROUTERS = [router_targetsite, router_selector, router_crawler, router_proxy, router_antiblock, router_schedule, router_extractor, router_validate, router_retry, router_storage, router_dedup, router_quality, router_monitor, router_alert, router_apigate, router_archive, router_template, router_flowline]
+ROUTERS = [router_targetsite, router_selector, router_crawler, router_proxy, router_antiblock, router_schedule, router_extractor, router_validate, router_retry, router_storage, router_dedup, router_quality, router_monitor, router_alert, router_apigate, router_archive, router_template, router_flowline, router_batchscope]

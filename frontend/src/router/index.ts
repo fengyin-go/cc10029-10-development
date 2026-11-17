@@ -19,6 +19,7 @@ const Apigate = () => import('@/views/apigate/index.vue')
 const Archive = () => import('@/views/archive/index.vue')
 const Template = () => import('@/views/template/index.vue')
 const Flowline = () => import('@/views/flowline/index.vue')
+const BatchScope = () => import('@/views/batchscope/index.vue')
 
 const router = createRouter({
   history: createWebHistory(),
@@ -42,6 +43,7 @@ const router = createRouter({
     { path: '/archive', name: 'archive', component: Archive },
     { path: '/template', name: 'template', component: Template },
     { path: '/flowline', name: 'flowline', component: Flowline },
+    { path: '/batchscope', name: 'batchscope', component: BatchScope },
   ],
 })
 

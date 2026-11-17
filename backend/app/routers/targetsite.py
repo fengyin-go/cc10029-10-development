@@ -4,7 +4,7 @@ from __future__ import annotations
 import csv
 import io
 
-from fastapi import APIRouter, HTTPException, Query, Request
+from fastapi import APIRouter, Header, HTTPException, Query, Request
 from fastapi.responses import StreamingResponse
 
 from app.schemas import ActionPayload, ActionResult, EntryPayload, PageResult
@@ -63,6 +63,23 @@ def export_entries(
     return StreamingResponse(
         iter([output.getvalue()]), media_type="text/csv; charset=utf-8",
         headers={"Content-Disposition": 'attachment; filename="targetsite.csv"'})
+
+
+@router.get("/execution-snapshot")
+def execution_snapshot(
+    x_team_id: str | None = Header(default=None),
+    x_role: str | None = Header(default=None),
+) -> dict:
+    """跨业务面：按爬虫引擎归属权限返回目标站点执行快照清单。
+
+    快照只包含当前团队有权访问的站点，归属与越权判定全部以爬虫引擎为准。
+    """
+    from app.services.batchscope import BatchScopeService, ScopeError
+    principal = BatchScopeService().principal(x_team_id, x_role)
+    try:
+        return BatchScopeService().target_snapshot_for_targetsite(principal)
+    except ScopeError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=exc.message)
 
 
 @router.get("/{entry_id}", response_model=dict)
